@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Utilities</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btn-spacing {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+<div class="container mt-5"> 
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2>Report Utilities</h2>
+                </div>
+                <div class="card-body">
+                    <!-- Resize Images -->
+                    <form enctype="multipart/form-data" action="#" method="post" id="resize-forms" class="mb-3">
+                        <div class="row">
+                            <!-- File Upload -->
+                            <div class="col-md-6">
+                                <div class="custom-file mb-3">
+                                    <input type="file" class="custom-file-input" id="customFileResize" name="zip_file">
+                                    <label class="custom-file-label" for="customFileResize">Upload ZIP</label>
+                                </div>
+                            </div>
+                            <!-- Width Input -->
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Width (cm)</span>
+                                    </div>
+                                    <input type="number" class="form-control" name="width_cm" placeholder="Enter width in cm" value="7.0" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+                            <button type="submit" formaction="http://localhost:8000/converter" class="btn btn-secondary btn-block btn-spacing">HEICs to Resized JPEGs</button>
+                            <button type="submit" formaction="http://localhost:8000/resizer" class="btn btn-secondary btn-block">Resize JPEG Images</button>
+                    </form>                                        
+                    <!-- Rename Images Sequentially -->
+                    <form enctype="multipart/form-data" action="http://localhost:8000/renamer" method="post" id="rename-form" class="mb-3">
+                        <div class="row">
+                            <!-- File Upload -->
+                            <div class="col-md-6">
+                                <div class="custom-file mb-3">
+                                    <input type="file" class="custom-file-input" id="customFile3" name="zip_file">
+                                    <label class="custom-file-label" for="customFile3">Upload ZIP</label>
+                                </div>
+                            </div>
+                            <!-- Start Number Input -->
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Start Number</span>
+                                    </div>
+                                    <input type="number" class="form-control" name="start_number" placeholder="Enter starting number" value="1" step="1">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-info btn-block">Rename Images Sequentially</button>
+                    </form>
+                    <form enctype="multipart/form-data" action="http://localhost:8000/watermarker" method="post" id="watermark-form" class="mb-3 form-spacing">
+                        <div class="custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="customFile2" name="zip_file">
+                            <label class="custom-file-label" for="customFile2">Upload ZIP</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Watermark Images</button>
+                    </form>
+                    <form enctype="multipart/form-data" action="#" method="post" id="grouper-form" class="mb-3 form-spacing">
+                        <div class="custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="customFileGrouper" name="zip_file">
+                            <label class="custom-file-label" for="customFileGrouper">Upload ZIP</label>
+                        </div>
+                        <button type="submit" formaction="http://localhost:8000/grouper" class="btn btn-success btn-block btn-spacing">Group Images by Time</button>
+                        <button type="submit" formaction="http://localhost:8000/reorganize" class="btn btn-success btn-block">Reorganize Subfolders</button>
+                    </form>
+                    <form enctype="multipart/form-data" action="http://localhost:8000/pdf-to-images" method="post" id="pdf-form" class="mb-3 form-spacing">
+                        <div class="custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="customFilePDF" name="pdf_file" accept=".pdf">
+                            <label class="custom-file-label" for="customFilePDF">Upload PDF</label>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-block">Convert PDF to Images</button>
+                    </form>                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="alert alert-warning mt-3">
+    <strong>Disclaimer:</strong> Please ensure that the ZIP file you upload does not contain an extra top-level folder. To create a ZIP file without an extra folder, open the desired folder, select all the items inside, right-click, and choose "Send to" > "Compressed (zipped) folder". Uploading a ZIP with an extra top-level folder may cause unexpected behavior in the application.
+</div>   
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+
+<script>
+    // Update the label of the file input when a file is selected
+    $('.custom-file-input').on('change', function() { 
+        let fileName = $(this).val().split('\\').pop(); 
+        $(this).next('.custom-file-label').addClass("selected").html(fileName); 
+    });
+</script>
+
+</body>
+</html>
